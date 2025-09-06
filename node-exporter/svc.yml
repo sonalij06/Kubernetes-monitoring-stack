@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-exporter
+  namespace: monitoring
+  labels:
+    app: node-exporter
+spec:
+  clusterIP: None   # Headless service for endpoint discovery
+  ports:
+    - name: metrics
+      port: 9101
+      targetPort: 9101
+      protocol: TCP
+  selector:
+    app: node-exporter
+

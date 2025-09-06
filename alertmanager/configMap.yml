@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-config
+  namespace: monitoring
+data:
+  alertmanager.yml: |
+    global:
+      resolve_timeout: 5m
+      smtp_smarthost: 'mail.tools.mdgapp.net:25'   # Replace with your SMTP relay
+      smtp_from: 'sonali.jain@communify.com'         # Sender address
+
+    route:
+      receiver: email-notifications
+
+    receivers:
+      - name: email-notifications
+        email_configs:
+          - to: 'sonali.jain@communify.com'     # Receiver address
+            send_resolved: true
+

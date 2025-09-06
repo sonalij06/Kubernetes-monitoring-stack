@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-exporter
+  namespace: monitoring
+  labels:
+    app: node-exporter
+spec:
+  selector:
+    matchLabels:
+      app: node-exporter
+  template:
+    metadata:
+      labels:
+        app: node-exporter
+    spec:
+      hostPID: true
+      hostNetwork: true
+      containers:
+        - name: node-exporter
+          image: prom/node-exporter:v1.8.0
+          args:
+            - "--web.listen-address=:9101"
+          ports:
+            - containerPort: 9101
+              name: metrics   # 👈 important, must match service + scrape config
+
